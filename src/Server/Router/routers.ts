@@ -1,14 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-
-type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
-type HttpHandler = (request: NextApiRequest, response: NextApiResponse) => void;
-
-interface RouteHandlerParams {
-  GET?: HttpHandler;
-  POST?: HttpHandler;
-  PUT?: HttpHandler;
-  DELETE?: HttpHandler;
-}
+import type { HttpMethod, RouteHandlerParams } from '@types';
 
 export default async function RouteHandler(
   request: NextApiRequest,
@@ -22,5 +13,5 @@ export default async function RouteHandler(
     return response.status(405).send("Not Allowed!!");
   }
 
-  return await handler(request, response);
+  await handler(request, response);
 }

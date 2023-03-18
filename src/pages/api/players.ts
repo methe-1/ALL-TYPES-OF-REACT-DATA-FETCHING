@@ -1,4 +1,4 @@
-import { RouteHandler, getPlayers } from "../../backend/";
+import { RouteHandler, getPlayers } from "../../Server";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(

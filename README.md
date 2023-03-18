@@ -1,3 +1,9 @@
+## Todo List
+- [ ] write tests for the index page.  
+- [ ] write tests for Player's components.  
+- [ ] write e2e tests.  
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
