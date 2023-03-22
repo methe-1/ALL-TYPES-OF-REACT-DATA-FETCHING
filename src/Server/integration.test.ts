@@ -23,6 +23,8 @@ describe("Handler", () => {
                 data: players.slice(0, 6),
                 limit: 6,
                 page: 1,
+                count: players.length
+
             }
 
             const getPlayers = createHandler(playerService)
@@ -50,6 +52,8 @@ describe("Handler", () => {
                 data: players.slice(index, index + limit),
                 limit,
                 page: page,
+                count: players.length
+
             }
 
             const getPlayers = createHandler(playerService)
@@ -73,6 +77,7 @@ describe("Handler", () => {
                 data: players.slice(0, 1), // cuz there's only one Hazard
                 limit: 6,
                 page: 1,
+                count: 1 // there's only one Hazard
             }
 
             const getPlayers = createHandler(playerService)
@@ -98,6 +103,7 @@ describe("Handler", () => {
                 data: players.slice(0, 6),
                 limit: 6,
                 page: 1,
+                count: players.length
             }
 
             await RouteHandler(req, res, {
@@ -122,6 +128,7 @@ describe("Handler", () => {
                 data: players.slice(18, 24),
                 limit: 6,
                 page: 4,
+                count: players.length
             }
     
             await RouteHandler(req, res, {
@@ -150,6 +157,7 @@ describe("Handler", () => {
                 data: players.slice(index, index + limit),
                 limit,
                 page: page,
+                count: players.length
             }
     
             await RouteHandler(req, res, {

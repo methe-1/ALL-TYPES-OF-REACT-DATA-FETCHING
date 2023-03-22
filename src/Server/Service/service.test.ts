@@ -9,7 +9,8 @@ describe('Service Layer', () => {
       expect(players).toEqual({
         data: playersExpected.slice(0, 6),
         limit: 6,
-        page: 1
+        page: 1,
+        count: playersExpected.length
       });
     })
     
@@ -19,7 +20,9 @@ describe('Service Layer', () => {
       expect(players).toEqual({
         data: playersExpected,
         limit: playersExpected.length,
-        page: 1
+        page: 1,
+        count: playersExpected.length
+
       });
   
     })
@@ -30,7 +33,9 @@ describe('Service Layer', () => {
       expect(players).toEqual({
         data: playersExpected.slice(12, 18),
         limit: 6,
-        page: 3
+        page: 3,
+        count: playersExpected.length
+
       });
     })
 
@@ -41,7 +46,8 @@ describe('Service Layer', () => {
       expect(players).toEqual({
         data: playersExpected.slice(index, index + 6),
         limit: 6,
-        page: 4
+        page: 4,
+        count: playersExpected.length
       });
     })
   })

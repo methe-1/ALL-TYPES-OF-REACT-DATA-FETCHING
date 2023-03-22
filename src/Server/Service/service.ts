@@ -1,9 +1,8 @@
-// import { promises as fs } from 'fs';
-// import path from 'path';
 import { Params } from "@types"
 import players from "../players.json"
 
-const playerService = async ({ search = "", page = 1, limit = 6 }: Params) => { 
+const playerService = async ({ search = "", page = 1, limit = 6 }: Params = {}) => {
+    
     try {
         let index = (page - 1) * limit
         const result = search.length ? lookFor(search) : players
@@ -19,6 +18,7 @@ const playerService = async ({ search = "", page = 1, limit = 6 }: Params) => {
             data: result.slice(index, index + limit),
             limit: limit,
             page: page,
+            count: result.length
         }
     } catch (error) {
         // console.log('error returning the players from service', error);

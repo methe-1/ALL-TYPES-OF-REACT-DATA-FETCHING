@@ -7,9 +7,14 @@ type Service = (params: Params) => Promise<any>
 export const createHandler = (service: Service) => {
     return async (req: NextApiRequest, res: NextApiResponse) => {
         try {
-            // @ts-ignore
-            const players = await service({ search: req.query["search"], page: Number.parseInt(req.query["page"]), limit: Number.parseInt(req.query["limit"]),
-            })
+            
+            const { query } = req;
+            const search = query["search"] && String(query["search"]) != 'undefinded' ? String(query["search"]) : '';
+            const page = Number(query["page"]) | 0 || 1;
+            const limit = Number(query["limit"]) | 0 || 6;
+
+            const players = await service({ search, page, limit })
+            
             res.status(200).json(players)
         } catch (error) {
             // console.log('Handler Error', error);
