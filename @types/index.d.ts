@@ -21,9 +21,10 @@ export interface RouteHandlerParams {
 }
 
 export interface PlayerData {
-    data: any[]
+    data: Player[]
     limit: number
     page: number
+    count?: number
 }
 
 export interface Player {

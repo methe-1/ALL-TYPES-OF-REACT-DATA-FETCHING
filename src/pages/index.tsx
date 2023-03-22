@@ -1,59 +1,35 @@
 import Head from "next/head"
-import { Inter } from "next/font/google"
 import SearchInput from "@/client/components/ui/Input/SearchInput"
 import Players from "@/client/components/Players"
-import { useEffect, useState } from "react"
-import { PlayerData } from "@types"
+import { useCallback, useEffect, useState } from "react"
+import { Player } from "@types"
 import Pagination from "@/client/components/Pagination"
+import Link from "next/link"
 
 export default function Home() {
-    const [players, setPlayers] = useState<PlayerData>({
-        data: [],
-        limit: 6,
-        page: 1,
-    })
-    const [search, setSearch] = useState<string>("")
-    const [page, setPage] = useState<number>(1);
 
-    const handleSearch = (e: any) => setSearch(e.target.value)
-    
-    // imprative way
-    const handlePagination = (pageId: number) => {
-        fetch(`/api/players?search=${search}&limit=6&page=${pageId}`)
-        .then((res) => res.json())
-        .then((data: any) => {
-            console.log(data)
-            setPlayers(data)
-            setPage(data.page)
-        })
-        .catch((err) => console.log(err))
-    }
-
-    // declarative way
-    useEffect(() => {
-        const controller =  new AbortController();
-            fetch(`/api/players?search=${search}&limit=6&page=${page}`,  { signal: controller.signal })
-                .then((res) => res.json())
-                .then((data: any) => {
-                    console.log(data)
-                    setPlayers(data)
-                    setPage(prevPage => data.page)
-                })
-                .catch((err) => {
-                    if(err.name == 'AbortError')
-                        console.log('The User cancelled the fetch');
-                    else
-                        console.log(err);
-                        
-                })
-
-        return () => {
-            console.log('cancellced!');
-            controller.abort();
+    const examples = [
+        {
+            href: '/indexSSR',
+            title: 'GetServerSideProps (SSR)'
+        },
+        {
+            href: '/indexSSR',
+            title: 'useSWR (CSR)'
+        },
+        {
+            href: '/indexWithUseQuery',
+            title: 'UseQuery (CSR)'
+        },
+        {
+            href: '/indexDeclarativeUseEffect',
+            title: 'Declarative UseEffect (CSR)'
+        },
+        {
+            href: '/indexImperativeUseEffect',
+            title: 'Imperative UseEffect (CSR)'
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [search])
-
+    ]
     return (
         <>
             <Head>
@@ -68,15 +44,16 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main>
-                <div className="container mx-auto flex flex-col gap-4 justify-center items-center px-4 mt-6">
-                    <SearchInput
-                        className="w-[60%] border-b-2"
-                        onChange={handleSearch}
-                        value={search}
-                    />
-                    <Players players={players.data} />
-                    <Pagination pagination={handlePagination} pageId={page} />
+            <main className=" h-screen flex items-center justify-center ">
+                <div className="container mx-auto flex flex-col justify-center items-center">
+                    <div className="mb-5">Each Example uses a different way to fetch data, <strong>CLICK TO DISCOVER</strong></div>
+                    <div className="flex flex-col">
+                        {examples.map((exp, i) => (
+                            <Link href={exp.href} key={i} className="py-2 px-3  mb-3 cursor-pointer shadow-md shadow-black hover:shadow-md  w-full text-center bg-gray-800 text-white rounded-md">
+                                {exp.title}
+                            </Link>
+                        ))}
+                    </div>
                 </div>
             </main>
         </>
