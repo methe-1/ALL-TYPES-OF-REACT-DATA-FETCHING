@@ -28,6 +28,12 @@ npm run start
 ```
 
 ## Todo List
-- [ ] write tests for the index pages.  
-- [ ] write tests for Player's components.  
-- [ ] write e2e tests. with Cypress  
+
+
+- **UI**
+- [ ] Create Single Player Page & use */api/players/[firstname]*
+- [ ] wrtite Single Player Page Tests
+
+- [ ] Write Index Pages Tests
+- [ ] Write Player's components Tests.  
+- [ ] write e2e tests. with Cypress
