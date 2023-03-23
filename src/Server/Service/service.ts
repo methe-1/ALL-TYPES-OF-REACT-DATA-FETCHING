@@ -5,7 +5,8 @@ const playerService = async ({ search = "", page = 1, limit = 6 }: Params = {}) 
     
     try {
         let index = (page - 1) * limit
-        const result = search.length ? lookFor(search) : players
+        const result = search.length ? lookFor(search) : players;
+
         if (index > result.length){
             page = Math.ceil(result.length / limit); 
             index = (page - 1) * limit;
@@ -14,6 +15,7 @@ const playerService = async ({ search = "", page = 1, limit = 6 }: Params = {}) 
             index = 0;
             page = 1;
         }
+
         return {
             data: result.slice(index, index + limit),
             limit: limit,

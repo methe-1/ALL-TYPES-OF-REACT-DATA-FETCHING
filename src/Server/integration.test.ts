@@ -1,11 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import getPlayers, { createHandler } from "./Handler/handlers"
+import getPlayers, { createHandler } from "./Handler/Players"
+import getPlayer, { createHandler  as createHandlerPlayer } from "./Handler/Player"
 import { createMocks } from "node-mocks-http"
 import playerService from "./Service/service"
 import players from "./players.json"
 import RouteHandler from "./Router/routers"
 
-describe("Handler", () => {
+describe("Integrations", () => {
     // let { spy } =  sinon.createSandbox();
 
     describe("Handler -> Service", () => {
@@ -34,6 +35,25 @@ describe("Handler", () => {
             expect(res._getJSONData()).toEqual(expectedData)
         })
 
+        it("should send one player", async () => {
+            const firstname = 'Eden';
+
+            const { req, res } = createMocks<NextApiRequest, NextApiResponse>({
+                method: "GET",
+                url: `/api/players`,
+                query : {
+                    firstname
+                }
+            })
+
+            const expectedData = players.find(p => p.firstname = firstname)
+
+            const getPlayer = createHandlerPlayer(playerService)
+            await getPlayer(req, res)
+
+            expect(res.statusCode).toBe(200)
+            expect(res._getJSONData()).toEqual(expectedData)
+        })
         it("should send the last page if the page offset is greater than the data length", async () => {
             const { req, res } = createMocks<NextApiRequest, NextApiResponse>({
                 method: "GET",
@@ -108,6 +128,26 @@ describe("Handler", () => {
 
             await RouteHandler(req, res, {
                 GET: getPlayers,
+            })
+
+            expect(res.statusCode).toBe(200)
+            expect(res._getJSONData()).toEqual(expectedData)
+        })
+
+        it("should succeed with 200OK and body of players", async () => {
+            const firstname = 'Eden';
+            const { req, res } = createMocks<NextApiRequest, NextApiResponse>({
+                method: "GET",
+                url: `/api/players`,
+                query: {
+                    firstname
+                }
+            })
+
+            const expectedData = players.find(p => p.firstname == firstname)
+
+            await RouteHandler(req, res, {
+                GET: getPlayer,
             })
 
             expect(res.statusCode).toBe(200)
