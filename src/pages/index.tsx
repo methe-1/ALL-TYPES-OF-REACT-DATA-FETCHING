@@ -14,7 +14,7 @@ export default function Home() {
             title: 'GetServerSideProps (SSR)'
         },
         {
-            href: '/indexSSR',
+            href: '/indexWithSWR',
             title: 'useSWR (CSR)'
         },
         {
