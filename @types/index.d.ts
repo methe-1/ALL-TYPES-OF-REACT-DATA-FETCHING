@@ -20,11 +20,11 @@ export interface RouteHandlerParams {
     DELETE?: HttpHandler
 }
 
-export interface PlayerData {
-    data: Player[]
-    limit: number
-    page: number
-    count?: number
+export interface PlayerData<T> {
+    data: T;
+    limit: number;
+    page: number;
+    count?: number;
 }
 
 export interface Player {

@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import playerService from "../../Service/service"
-import { Params } from "@types"
+import { getPlayer } from "../../Service/service"
+import { Player } from "@types"
 
-type Service = (params: Params) => Promise<any>
+type Service = (input: string) => Promise<{ data: Player | undefined }> 
 
 export const createHandler = (service: Service) => {
     return async (req: NextApiRequest, res: NextApiResponse) => {
@@ -11,9 +11,9 @@ export const createHandler = (service: Service) => {
             const firstname = query["firstname"] && 
             String(query["firstname"]) != 'undefinded' ? String(query["firstname"]) : '';
 
-            const player = await service({ search: firstname });
+            const player = await service(firstname);
             
-            res.status(200).json(player.data[0])
+            res.status(200).json(player)
         } catch (error) {
             // console.log('Handler Error', error);
             res.status(500).json({ message: "Sorry something went wrong!" })
@@ -21,4 +21,4 @@ export const createHandler = (service: Service) => {
     }
 }
 
-export default createHandler(playerService)
+export default createHandler(getPlayer);

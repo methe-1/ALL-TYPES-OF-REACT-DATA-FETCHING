@@ -5,7 +5,7 @@ const Pagination: FC<Pagination> = ({ pagination, pageId }) => {
 
     return (
         <>
-            <nav aria-label="Page navigation example" className="">
+            <nav aria-label="Page navigation example" className="flex items-center w-[25%] justify-around">
                 <ul className="inline-flex items-center -space-x-px">
                     <li>
                         <a
@@ -70,6 +70,7 @@ const Pagination: FC<Pagination> = ({ pagination, pageId }) => {
                         </a>
                     </li>
                 </ul>
+                <div className="px-3 py-1 bg-black rounded-md text-white">{pageId}</div>
             </nav>
         </>
     )

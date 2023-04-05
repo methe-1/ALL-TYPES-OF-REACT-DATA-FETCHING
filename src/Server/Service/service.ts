@@ -1,4 +1,4 @@
-import { Params } from "@types"
+import { Params, Player } from "@types"
 import players from "../players.json"
 
 const playerService = async ({ search = "", page = 1, limit = 6 }: Params = {}) => {
@@ -43,4 +43,15 @@ export function lookFor(input: string): any[] {
     return founds
 }
 
+export const getPlayer = async (input: string) => {
+    if(!input.length) return {
+        data: undefined
+    };
+
+    const found: Player | undefined = players.find((p) => `${p.firstname}-${p.lastname}` == input)
+
+    return { 
+        data: found
+    };
+}
 export default playerService
