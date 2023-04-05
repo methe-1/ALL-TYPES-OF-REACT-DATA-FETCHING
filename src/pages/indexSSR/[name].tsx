@@ -4,7 +4,9 @@ import Image from "next/image"
 import { useRouter } from "next/router";
 
 export default function Home({ player }: { player: PlayerData<Player> }) {
-    const router = useRouter()
+    const router = useRouter();
+    const defaultImage = 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png';
+    
     return (
         <>
             <main className="bg-gray-200 h-[100svh] flex flex-col justify-center ">
@@ -19,7 +21,7 @@ export default function Home({ player }: { player: PlayerData<Player> }) {
                             height={1000}
                             width={1000}
                             className="h-full w-full object-contain"
-                            src={player?.data.pictureURl}
+                            src={player?.data.pictureURl || defaultImage}
                             alt={player?.data.firstname + player?.data.lastname}
                         />
                     </div>
