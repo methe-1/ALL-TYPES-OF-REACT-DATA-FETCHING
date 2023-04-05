@@ -38,7 +38,7 @@ export default function Home({
 
             // eslint-disable-next-line react-hooks/exhaustive-deps
         },
-        [search, limit]
+        [search, limit, total]
     )
 
     // IMPERATIVE WAY
