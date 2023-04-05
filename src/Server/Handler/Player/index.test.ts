@@ -13,19 +13,19 @@ describe("Handler: Player", () => {
       method: "GET",
       url: `/api/players/`,
       query: {
-        firsname: 'Eden'
+        firsname: 'Eden-Hazard'
       }
     })
     
-    const fakeData = players.find(p => p.firstname == "Eden")
+    const fakeData = players.find(p => `${p.firstname}-${p.lastname}` == "Eden-Hazard")
 
-    const service = sinon.fake.resolves({ data: [fakeData]});
-
+    const service = sinon.fake.resolves({ data: fakeData });
+    
     const getPlayer = createHandler(service);
     await getPlayer(req, res)
 
     expect(res.statusCode).toBe(200)
-    expect(res._getJSONData()).toEqual(fakeData);
+    expect(res._getJSONData()).toEqual({ data: fakeData });
 
     expect(service.calledOnce).toBeTruthy();
     

@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import getPlayers, { createHandler } from "./Handler/Players"
 import getPlayer, { createHandler  as createHandlerPlayer } from "./Handler/Player"
 import { createMocks } from "node-mocks-http"
-import playerService from "./Service/service"
+import playerService, { getPlayer as getPlayerService } from "./Service/service"
 import players from "./players.json"
 import RouteHandler from "./Router/routers"
 
@@ -25,7 +25,6 @@ describe("Integrations", () => {
                 limit: 6,
                 page: 1,
                 count: players.length
-
             }
 
             const getPlayers = createHandler(playerService)
@@ -36,7 +35,7 @@ describe("Integrations", () => {
         })
 
         it("should send one player", async () => {
-            const firstname = 'Eden';
+            const firstname = 'Eden-Hazard';
 
             const { req, res } = createMocks<NextApiRequest, NextApiResponse>({
                 method: "GET",
@@ -46,13 +45,13 @@ describe("Integrations", () => {
                 }
             })
 
-            const expectedData = players.find(p => p.firstname = firstname)
+            const expectedData = players.find(p => `${p.firstname}-${p.lastname}` == firstname)
 
-            const getPlayer = createHandlerPlayer(playerService)
+            const getPlayer = createHandlerPlayer(getPlayerService)
             await getPlayer(req, res)
 
             expect(res.statusCode).toBe(200)
-            expect(res._getJSONData()).toEqual(expectedData)
+            expect(res._getJSONData()).toEqual({ data: expectedData })
         })
         it("should send the last page if the page offset is greater than the data length", async () => {
             const { req, res } = createMocks<NextApiRequest, NextApiResponse>({
@@ -135,7 +134,7 @@ describe("Integrations", () => {
         })
 
         it("should succeed with 200OK and body of players", async () => {
-            const firstname = 'Eden';
+            const firstname = 'Eden-Hazard';
             const { req, res } = createMocks<NextApiRequest, NextApiResponse>({
                 method: "GET",
                 url: `/api/players`,
@@ -144,14 +143,14 @@ describe("Integrations", () => {
                 }
             })
 
-            const expectedData = players.find(p => p.firstname == firstname)
+            const expectedData = players.find(p => `${p.firstname}-${p.lastname}` == firstname)
 
             await RouteHandler(req, res, {
                 GET: getPlayer,
             })
 
             expect(res.statusCode).toBe(200)
-            expect(res._getJSONData()).toEqual(expectedData)
+            expect(res._getJSONData()).toEqual({ data: expectedData })
         })
 
         it("should send the right page", async () => {
